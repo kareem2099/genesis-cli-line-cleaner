@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "name": "genesis-cli-line-cleaner",
+  "description": "Offline tool that removes blank lines and normalizes CRLF to LF.",
+  "entry": "src/index.ts",
+  "input": {
+    "text": {
+      "type": "string",
+      "label": "Text",
+      "max": 5000,
+      "optional": false,
+      "default": ""
+    }
+  },
+  "network": [],
+  "timeoutMs": 3000,
+  "tests": [
+    {
+      "name": "empty text",
+      "input": {
+        "text": ""
+      },
+      "expect": {
+        "cleanedText": "",
+        "removedLines": 0
+      }
+    },
+    {
+      "name": "Arabic text with blank line",
+      "input": {
+        "text": "مرحبا\n\nالعالم"
+      },
+      "expect": {
+        "cleanedText": "مرحبا\nالعالم",
+        "removedLines": 1
+      }
+    },
+    {
+      "name": "CRLF normalization and blank line removal",
+      "input": {
+        "text": "Hello\r\n\r\nWorld\r\n"
+      },
+      "expect": {
+        "cleanedText": "Hello\nWorld",
+        "removedLines": 2
+      }
+    }
+  ],
+  "verify": "genesis-verify-ec0bf168cc90c94c167d8e37956e6e72"
+}
